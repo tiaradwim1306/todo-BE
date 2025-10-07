@@ -1,0 +1,22 @@
+# .gitignore
+
+# 1. DEPENDENSI OTOMATIS (Wajib Diabaikan)
+# Folder yang berisi semua modul yang diinstal oleh NPM.
+/node_modules
+
+# 2. VARIABEL LINGKUNGAN SENSITIF (KEAMANAN KRUSIAL)
+# File ini berisi kredensial database (DB_USER, DB_PASSWORD) dan kunci rahasia (JWT_SECRET).
+.env
+
+# 3. PM2 & LOGS (File Runtime)
+# File dan folder yang dibuat oleh process manager (PM2) saat aplikasi berjalan.
+.pm2/
+pm2logs.log
+pm2-config.json
+*.log
+
+# 4. FILE EDITOR/OS
+# Mengabaikan file-file cache yang dibuat oleh sistem operasi atau editor (misalnya VS Code)
+.DS_Store
+*.swp
+.vscode
