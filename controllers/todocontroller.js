@@ -126,7 +126,7 @@ export const createTodo = async (req, res) => {
 };
 
 // --------------------------------------------------------------------------
-// 3. PUT (Update)
+// 3. PUT (Update) - KODE PERBAIKAN
 // --------------------------------------------------------------------------
 export const updateTodo = async (req, res) => {
     const { id } = req.params;
@@ -134,15 +134,27 @@ export const updateTodo = async (req, res) => {
     // req.body sekarang berisi data teks yang dikirim melalui FormData
     const { task_description, is_completed, day_title, task_title, file_name_shortcut } = req.body; 
 
-    // req.files berisi file yang diunggah jika Multer dikonfigurasi di router
     const files = req.files; 
     
     const updateFields = {};
 
+    // =========================================================================
+    // ✅ PERBAIKAN DI SINI: MENGURUS is_completed
+    // =========================================================================
     if (is_completed !== undefined) {
-        // Asumsi 1 atau 0 untuk boolean
-        updateFields.is_completed = is_completed ? 1 : 0; 
+        // Mengubah string ("0" atau "1") menjadi integer. 
+        const statusInt = parseInt(is_completed, 10);
+        
+        // Memastikan nilai yang diupdate adalah 0 atau 1
+        if (statusInt === 0 || statusInt === 1) {
+            updateFields.is_completed = statusInt; 
+        } else {
+            // Opsional: Error handling jika data status tidak valid
+            console.warn(`Nilai is_completed tidak valid: ${is_completed}`);
+        }
     }
+    // =========================================================================
+
     if (task_description !== undefined) {
         updateFields.task_description = task_description || null; 
     }
